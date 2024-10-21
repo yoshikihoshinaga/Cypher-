@@ -1,0 +1,29 @@
+# Decrypting the ciphertext using Vigenère cipher with key "Yoshi"
+def vigenere_decrypt(ciphertext, key):
+    decrypted_text = []
+    key_length = len(key)
+    key_as_int = [ord(i) for i in key.lower()]
+    ciphertext_int = [ord(i) for i in ciphertext.lower() if i.isalpha()]
+    
+    for i in range(len(ciphertext_int)):
+        value = (ciphertext_int[i] - key_as_int[i % key_length]) % 26
+        decrypted_text.append(chr(value + 97))
+    
+    # Reintroduce spaces from original ciphertext
+    decrypted_with_spaces = []
+    non_alpha_index = 0
+    for char in ciphertext:
+        if char.isalpha():
+            decrypted_with_spaces.append(decrypted_text[non_alpha_index])
+            non_alpha_index += 1
+        else:
+            decrypted_with_spaces.append(char)
+    
+    return ''.join(decrypted_with_spaces)
+
+# Inputs
+ciphertext = "cwavb rsv"
+key = "Yoshi"
+
+# Decrypting
+vigenere_decrypt(ciphertext, key)
